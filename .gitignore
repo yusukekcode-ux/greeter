@@ -1,0 +1,12 @@
+
+# APM dependencies
+apm_modules/
+
+# uv / Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# SQLite database
+*.db

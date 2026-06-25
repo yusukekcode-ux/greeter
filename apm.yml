@@ -1,0 +1,13 @@
+name: greeter
+version: 1.0.0
+description: APM project for greeter
+author: yusukekcode-ux
+targets:
+- claude
+dependencies:
+  apm:
+  - anthropics/skills/skills/frontend-design
+  - mattpocock/skills/skills/productivity/grilling
+  mcp: []
+includes: auto
+scripts: {}

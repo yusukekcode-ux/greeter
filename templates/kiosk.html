@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}来訪者受付{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10">
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <h1 class="text-2xl font-bold text-center text-blue-700 mb-2">ようこそ</h1>
+    <p class="text-center text-gray-500 mb-8">受付方法を選択してください</p>
+
+    <div class="flex border-b border-gray-200 mb-6">
+      <button
+        type="button"
+        id="tab-walkin"
+        onclick="showTab('walkin')"
+        class="flex-1 py-2.5 text-sm font-semibold border-b-2 border-blue-600 text-blue-700">
+        新規受付
+      </button>
+      <button
+        type="button"
+        id="tab-reservation"
+        onclick="showTab('reservation')"
+        hx-get="/kiosk/reservations"
+        hx-target="#reservation-list"
+        hx-trigger="click once"
+        class="flex-1 py-2.5 text-sm font-semibold border-b-2 border-transparent text-gray-400">
+        予約から受付
+      </button>
+    </div>
+
+    <div id="panel-walkin">
+      <form
+        hx-post="/kiosk/register"
+        hx-target="#result"
+        hx-swap="innerHTML"
+        hx-indicator="#spinner"
+        class="space-y-5"
+      >
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">お名前 <span class="text-red-500">*</span></label>
+          <input
+            type="text" name="name" required
+            placeholder="山田 太郎"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">ご用件 <span class="text-red-500">*</span></label>
+          <select name="purpose" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">選択してください</option>
+            <option value="商談・打ち合わせ">商談・打ち合わせ</option>
+            <option value="採用面接">採用面接</option>
+            <option value="納品・引き取り">納品・引き取り</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">担当者名 <span class="text-red-500">*</span></label>
+          <input
+            type="text" name="staff_name" required
+            placeholder="田中 花子"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+        </div>
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors">
+          受付する
+        </button>
+        <div id="spinner" class="htmx-indicator text-center text-gray-400 text-sm">処理中...</div>
+      </form>
+    </div>
+
+    <div id="panel-reservation" class="hidden">
+      <div id="reservation-list">
+        <p class="text-center text-gray-400 py-8">読み込み中...</p>
+      </div>
+    </div>
+
+    <div id="result" class="mt-6"></div>
+  </div>
+</div>
+
+<script>
+function showTab(tab) {
+  const walkin = document.getElementById('panel-walkin');
+  const reservation = document.getElementById('panel-reservation');
+  const tabWalkin = document.getElementById('tab-walkin');
+  const tabReservation = document.getElementById('tab-reservation');
+
+  if (tab === 'walkin') {
+    walkin.classList.remove('hidden');
+    reservation.classList.add('hidden');
+    tabWalkin.classList.add('border-blue-600', 'text-blue-700');
+    tabWalkin.classList.remove('border-transparent', 'text-gray-400');
+    tabReservation.classList.add('border-transparent', 'text-gray-400');
+    tabReservation.classList.remove('border-blue-600', 'text-blue-700');
+  } else {
+    walkin.classList.add('hidden');
+    reservation.classList.remove('hidden');
+    tabReservation.classList.add('border-blue-600', 'text-blue-700');
+    tabReservation.classList.remove('border-transparent', 'text-gray-400');
+    tabWalkin.classList.add('border-transparent', 'text-gray-400');
+    tabWalkin.classList.remove('border-blue-600', 'text-blue-700');
+  }
+}
+</script>
+{% endblock %}

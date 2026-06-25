@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}管理画面{% endblock %}
+
+{% block head %}
+<script>
+  // htmx polling: refresh list every 10 seconds as fallback
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">管理画面 — 待機者一覧</h1>
+
+  <div
+    id="visitors-list"
+    hx-get="/admin/visitors"
+    hx-trigger="every 10s"
+    hx-swap="innerHTML"
+  >
+    {% include "partials/visitors_list.html" %}
+  </div>
+</div>
+{% endblock %}

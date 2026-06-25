@@ -1,0 +1,20 @@
+{% if reservations %}
+<div class="space-y-3">
+  {% for r in reservations %}
+  <button
+    hx-post="/kiosk/reservations/{{ r.id }}/checkin"
+    hx-target="#result"
+    hx-swap="innerHTML"
+    class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded-lg p-4 transition-colors">
+    <p class="font-semibold text-gray-800">{{ r.name }} 様</p>
+    <p class="text-sm text-gray-500">
+      {{ r.reserved_date.strftime("%Y/%m/%d") }}
+      {% if r.reserved_time %}{{ r.reserved_time.strftime("%H:%M") }}〜{% endif %}
+      {{ r.purpose }} / 担当: {{ r.staff_name }}
+    </p>
+  </button>
+  {% endfor %}
+</div>
+{% else %}
+<p class="text-center text-gray-400 py-8">本日の予約はありません</p>
+{% endif %}

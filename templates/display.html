@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}呼び出し表示板{% endblock %}
+
+{% block head %}
+<style>
+  .number-display {
+    font-size: clamp(4rem, 20vw, 14rem);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  @keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .flash { animation: flash 0.6s ease-in-out 3; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-[80vh] flex flex-col items-center justify-center text-center">
+  <p class="text-gray-400 text-lg mb-4 tracking-widest uppercase">Now Calling</p>
+
+  <div id="ticket-number" class="number-display text-blue-700">
+    —
+  </div>
+
+  <div id="caller-info" class="mt-6 text-xl text-gray-600 min-h-[2rem]"></div>
+  <div id="status-msg" class="mt-2 text-sm text-gray-400 min-h-[1.5rem]"></div>
+
+  <div class="mt-16 text-gray-300 text-sm">受付番号が表示されるまでお待ちください</div>
+</div>
+
+<script>
+const ticketEl = document.getElementById('ticket-number');
+const callerEl = document.getElementById('caller-info');
+const statusEl = document.getElementById('status-msg');
+
+const es = new EventSource('/display/sse');
+
+es.onmessage = (e) => {
+  const msg = JSON.parse(e.data);
+  if (msg.event === 'called') {
+    const num = String(msg.data.ticket_number).padStart(3, '0');
+    ticketEl.textContent = num;
+    callerEl.textContent = `${msg.data.name} 様 → ${msg.data.staff_name} 担当`;
+    statusEl.textContent = '呼び出し中';
+    ticketEl.classList.remove('flash');
+    void ticketEl.offsetWidth; // reflow
+    ticketEl.classList.add('flash');
+  } else if (msg.event === 'done') {
+    statusEl.textContent = '対応完了';
+    callerEl.textContent = '';
+  } else if (msg.event === 'cancelled') {
+    statusEl.textContent = 'キャンセルされました';
+  }
+};
+
+es.onerror = () => {
+  statusEl.textContent = '接続が切断されました。再接続中...';
+};
+</script>
+{% endblock %}
