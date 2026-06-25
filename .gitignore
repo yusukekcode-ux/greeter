@@ -1,6 +1,7 @@
 
 # APM dependencies
 apm_modules/
+.claude/skills/
 
 # uv / Python
 .venv/
