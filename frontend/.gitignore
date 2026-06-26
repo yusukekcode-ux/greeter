@@ -18,6 +18,9 @@ Thumbs.db
 !.env.example
 !.env.test
 
+# Generated API client
+src/lib/api/generated.ts
+
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
