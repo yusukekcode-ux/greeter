@@ -16,6 +16,7 @@
 		es.onopen = () => { connected = true; };
 
 		es.onmessage = (e) => {
+			console.log('[SSE]', e.data);
 			const msg = JSON.parse(e.data) as { event: string; data: CalledData };
 			if (msg.event === 'called') {
 				current = msg.data;
