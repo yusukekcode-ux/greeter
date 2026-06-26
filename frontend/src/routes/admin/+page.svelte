@@ -61,15 +61,12 @@
 <div class="min-h-screen bg-gray-50">
 	<header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
 		<h1 class="text-xl font-bold text-gray-800">管理画面</h1>
-		<div class="flex items-center gap-4">
-			<a href="/admin/reservations" class="text-sm text-blue-500 hover:underline">予約管理</a>
-			<button
-				onclick={fetchVisitors}
-				class="text-sm px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
-			>
-				更新
-			</button>
-		</div>
+		<button
+			onclick={fetchVisitors}
+			class="text-sm px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+		>
+			更新
+		</button>
 	</header>
 
 	<main class="max-w-3xl mx-auto p-8">
