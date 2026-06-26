@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from app.database import init_db
-from app.routes import kiosk, admin, display, reservation, visitors
+from app.routes import kiosk, admin, display, reservation, visitors, reservations
 
 
 @asynccontextmanager
@@ -27,6 +27,7 @@ app.include_router(admin.router)
 app.include_router(display.router)
 app.include_router(reservation.router)
 app.include_router(visitors.router)
+app.include_router(reservations.router)
 
 
 @app.get("/")
