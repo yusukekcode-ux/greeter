@@ -10,4 +10,6 @@ dependencies = [
     "sqlalchemy>=2.0.0",
     "aiosqlite>=0.22.0",
     "python-multipart>=0.0.32",
+    "asyncpg>=0.31.0",
+    "python-dotenv>=1.2.2",
 ]
