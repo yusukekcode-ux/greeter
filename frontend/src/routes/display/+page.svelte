@@ -61,7 +61,7 @@
 				</p>
 			</div>
 		{:else}
-			<div class="text-center text-gray-600">
+			<div class="text-center text-gray-500">
 				<p class="text-6xl font-light mb-4">—</p>
 				<p class="text-2xl tracking-wide">しばらくお待ちください</p>
 			</div>
