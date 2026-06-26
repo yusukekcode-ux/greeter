@@ -1,4 +1,4 @@
-from sqlalchemy import select, func
+from sqlalchemy import select, func, cast, Date
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Visitor, VisitorStatus
@@ -10,7 +10,7 @@ async def issue_ticket(
 ) -> Visitor:
     result = await db.execute(
         select(func.max(Visitor.ticket_number)).where(
-            func.date(Visitor.created_at) == func.date("now")
+            cast(Visitor.created_at, Date) == func.current_date()
         )
     )
     max_num = result.scalar() or 0
