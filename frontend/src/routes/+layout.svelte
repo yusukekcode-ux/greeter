@@ -21,11 +21,12 @@
 		onmouseenter={() => (showHoverNav = true)}
 		onmouseleave={() => (showHoverNav = false)}
 	>
-		<div class="h-4"></div>
 		{#if showHoverNav}
 			<div transition:fly={{ y: -48, duration: 150 }} class="shadow-xl">
 				<Nav />
 			</div>
+		{:else}
+			<div class="h-4"></div>
 		{/if}
 	</div>
 {:else}
