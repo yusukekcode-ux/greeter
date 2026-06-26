@@ -1,22 +1,15 @@
 import asyncio
 import json
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse, StreamingResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import StreamingResponse
 
 from app.state import subscribe, unsubscribe
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
 
 
-@router.get("/display", response_class=HTMLResponse)
-async def display_page(request: Request):
-    return templates.TemplateResponse("display.html", {"request": request})
-
-
-@router.get("/display/sse")
-async def display_sse(request: Request):
+@router.get("/api/sse")
+async def sse(request: Request):
     queue = subscribe()
 
     async def event_generator():
