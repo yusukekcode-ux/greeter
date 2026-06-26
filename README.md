@@ -100,6 +100,42 @@ npm run dev
 
 `http://localhost:5173/display` をロビーのモニターで開くと、呼び出し時に番号・氏名・担当者名がリアルタイムで表示される。
 
+## sbx（サンドボックス）環境での確認
+
+sbx環境ではサンドボックス内のポートをホストに公開する必要がある。
+
+### 1. サーバーを起動
+
+```bash
+# バックエンド
+cd backend && bash start.sh
+
+# フロントエンド（--host 0.0.0.0 で外部からアクセス可能にする）
+cd frontend && npm run sbx-dev
+```
+
+### 2. ホスト側でポートを公開
+
+ホストのターミナルで実行する（サンドボックス名は `claude-greeter`）。
+
+```bash
+sbx ports claude-greeter --publish 5173:5173/tcp
+sbx ports claude-greeter --publish 8000:8000/tcp
+```
+
+### 3. ブラウザでアクセス
+
+```
+http://localhost:5173/kiosk
+```
+
+公開中のポートを確認・解除する場合：
+
+```bash
+sbx ports claude-greeter
+sbx ports claude-greeter --unpublish 5173:5173/tcp
+```
+
 ## 開発
 
 ### API ドキュメント
